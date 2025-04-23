@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Product - QuickKart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 18px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="file"]:focus,
+        textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+            height: 80px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Add New Product</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="text" name="name" placeholder="Product Name" required>
+            <input type="number" name="price" placeholder="Price (₹)" required>
+            <textarea name="description" placeholder="Product Description" required></textarea>
+            <!-- <input type="file" name="image" required> -->
+
+            <div class="file-input-wrapper">
+                <input type="file" name="image">
+            </div>
+
+            <!-- Display default image if no file selected -->
+            <div>
+                <img src="{{ url_for('static', filename='uploads/default.png') }}" alt="Default Image" width="100" style="margin-top: 10px;">
+            </div>
+
+            <div class="form-actions">
+                <input type="submit" value="Add Product">
+                <input type="reset" value="Reset">
+            <!-- <input type="submit" value="Add Product"> -->
+        </form>
+    </div>
+
+</body>
+</html>

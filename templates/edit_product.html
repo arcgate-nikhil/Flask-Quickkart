@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Product - QuickKart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .edit-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 6px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        form input[type="text"],
+        form input[type="number"],
+        form textarea,
+        form input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+
+        form input:focus,
+        form textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        form textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        img {
+            display: block;
+            margin: 10px 0 20px;
+            border-radius: 6px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        a {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="edit-container">
+        <h2>Edit Product</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <label for="name">Name:</label>
+            <input type="text" name="name" value="{{ product.name }}" required>
+
+            <label for="price">Price:</label>
+            <input type="number" name="price" value="{{ product.price }}" required>
+
+            <label for="description">Description:</label>
+            <textarea name="description" required>{{ product.description }}</textarea>
+
+            <label for="image">Image:</label>
+            {% if product.image %}
+                <img src="{{ url_for('static', filename='uploads/' + product.image) }}" width="100" alt="Current image">
+            {% endif %}
+            <input type="file" name="image">
+
+            <button type="submit">Update Product</button>
+        </form>
+
+        <a href="{{ url_for('index') }}">⬅ Back to Home</a>
+    </div>
+
+</body>
+</html>

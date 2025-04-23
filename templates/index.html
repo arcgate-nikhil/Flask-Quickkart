@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QuickKart - Store 🛒</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        header div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .navbar {
+            background-color: #fff;
+            padding: 15px 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .navbar a,
+        .navbar span {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            padding: 30px 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .product-list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 0;
+            list-style: none;
+        }
+
+        .product-item {
+            width: 280px;
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-align: center;
+        }
+
+        .product-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        .product-item img {
+            width: 100%;
+            max-height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .product-item h3 {
+            margin: 10px 0 5px;
+            color: #007bff;
+        }
+
+        .product-item p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .product-item button {
+            margin-top: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .product-item button:hover {
+            background-color: #0056b3;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+            font-size: 14px;
+            background-color: #f0f0f0;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div>
+            <img src="{{ url_for('static', filename='uploads/ChatGPT Image Apr 15, 2025, 06_01_00 PM.png') }}" width="60" height="60" alt="QuickKart Logo" style="border-radius: 10px;">
+            <h1 style="margin: 0;">Welcome to QuickKart <span style="font-size: 26px;">🛒</span></h1>
+        </div>
+    </header>
+
+    <!-- <div class="navbar">
+        {% if not current_user.is_authenticated %}
+        <a href="{{ url_for('register') }}">Register</a>
+        <a href="{{ url_for('login') }}">Login</a>
+        {% else %}
+        <span>Welcome, <strong>{{ current_user.username }}</strong></span>
+        <a href="{{ url_for('logout') }}">Logout</a>
+        {% if current_user.username == 'admin101' %}
+        <a href="{{ url_for('add_product') }}">Add Product</a>
+        <a href="{{ url_for('view_users') }}">View Users</a>
+        {% endif %}
+        {% endif %}
+    </div> -->
+    <div class="navbar">
+        {% if not current_user.is_authenticated %}
+        <a href="{{ url_for('register') }}">Register</a>
+        <a href="{{ url_for('login') }}">Login</a>
+        {% else %}
+        <span>Welcome, <strong>{{ current_user.username }}</strong></span>
+        <a href="{{ url_for('logout') }}">Logout</a>
+        <a href="{{ url_for('change_password') }}">Change Password</a>  <!-- 👈 New Link Added -->
+        {% if current_user.username == 'admin101' %}
+        <a href="{{ url_for('add_product') }}">Add Product</a>
+        <a href="{{ url_for('view_users') }}">View Users</a>
+        {% endif %}
+        {% endif %}
+    </div>
+
+    <div class="content">
+        <div class="products">
+            <h2>Available Products</h2>
+            {% if products %}
+            <ul class="product-list">
+                {% for p in products %}
+                <li class="product-item">
+                    <h3>{{ p.name }}</h3>
+                    <p><strong>Price:</strong> ₹{{ p.price }}</p>
+                    <p><em>{{ p.description }}</em></p>
+                    {% if p.image %}
+                    <img src="{{ url_for('static', filename='uploads/' + p.image) }}" alt="{{ p.name }}">
+                    {% endif %}
+                    <button>Add to Cart</button>
+                
+                    {% if current_user.username == 'admin101' %}
+                    <div style="margin-top: 10px; display: flex; gap: 10px; justify-content: center;">
+                        <a href="{{ url_for('edit_product', product_id=p.id) }}">
+                            <button style="background-color: #28a745;">Edit</button>
+                        </a>
+                        <form action="{{ url_for('delete_product', product_id=p.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" onclick="return confirm('Delete this product?')" style="background-color: #dc3545;">Delete</button>
+                        </form>
+                    </div>
+                    {% endif %}
+                </li>
+                
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p style="text-align: center;">No products found.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 QuickKart. All rights reserved.</p>
+    </div>
+
+</body>
+</html>

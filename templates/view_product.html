@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Products</title>
+</head>
+<body>
+    <h2>Registered Users</h2>
+    <ul>
+        {% for product in products %}
+            <li>{{ product.name }}</li>
+            <!-- <li>{{ product.image }}</li> -->
+            <!-- <img src="{{ url_for('static', filename='uploads/41WzRV0Y1oL._SX300_SY300_QL70_FMwebp_.webp') }}"> -->
+            {% if product.image %}
+                <img src="{{ url_for('static', filename='uploads/' + product.image) }}" alt="{{ product.name }}" width="100">
+            {% else %}
+                <p>No image available.</p>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('index') }}">Back to Home</a>
+</body>
+</html>

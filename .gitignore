@@ -1,0 +1,21 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# Environment variables
+.env
+
+# Uploads and compiled assets
+static/uploads/
+*.scssc
+
+# OS files
+.DS_Store
+
+# VSCode
+.vscode/
+
+# Virtual environments
+venv/
+env/
